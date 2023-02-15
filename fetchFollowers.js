@@ -2,7 +2,6 @@ const Octokit = require("@octokit/core").Octokit
 const fs = require('fs');
 
 const octokit = new Octokit();
-//const user = 'gabrielsouzas';
 
 const fetchFollowers = async (value, user, filter = '') => {
   const response = await octokit.request(`GET /users/{username}/${value}`, {
@@ -32,16 +31,6 @@ const fetchFollowers = async (value, user, filter = '') => {
 
   //return data;
 };
-
-// Comparar followers e following
-const compareFollowes = async () => {
-  const followers = await fetchFollowers();
-  const following = await fetchFollowing();
-
-  console.log(followers)
-}
-
-//compareFollowes();
 
 fetchFollowers('followers', 'gabrielsouzas');
 fetchFollowers('following', 'gabrielsouzas');

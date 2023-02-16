@@ -10,6 +10,27 @@
     document.querySelector('.container').innerHTML = htmlList;
 })();*/
 
+const arrayLogin = [];
+
+const followers = document.querySelector('#followers');
+const following = document.querySelector('#following');
+
+function addElement(tag, parent, innerHtml = '', src = '', className = '') {
+    var element = document.createElement(tag);
+    if (className != '') {
+        element.classList.add(className);
+    }
+    if (innerHtml != '') {
+        element.innerHTML = innerHtml;
+    }
+    if (src != '') {
+        element.src = src;
+    }
+    parent.appendChild(element);
+    
+    return element;
+}
+
 const loadFollowers = async (value, element, filter = '') => {
     const response = await fetch(`./${value}.json`);
     const data = await response.json();
@@ -21,18 +42,45 @@ const loadFollowers = async (value, element, filter = '') => {
     if (filter != '') {
         html = data.map( dt => `<li><ul>${dt[`${filter}`]}</ul></li>`).join('') // .join('') - separador das strings
     } else {
-        html = data.map( dt => `<div class="user">
+        /*html = data.map( dt => `<div class="user">
                                     <img src="${dt.avatar_url}">
                                     <span class="login">${dt.login}</span>
-                                </div>`).join('')
+                                </div>`).join('')*/
+        html = data.map( dt => {
+            let user = addElement('div', element, '', '', 'user');
+            addElement('img', user, '', dt.avatar_url, '');
+            addElement('span', user, dt.login, '', `login`);
+        })
     }
 
     // colocar no html
-    element.innerHTML = html;
+    //element.innerHTML = html;
 }
 
-const followers = document.querySelector('.followers');
-const following = document.querySelector('.following');
 
-loadFollowers('followers', followers);
-loadFollowers('following', following);
+
+function compareFollowersFollowing(){
+    const login = document.querySelectorAll('.login');
+    const arrayNodesLogin = [...login];
+    
+    //console.log(login)
+    var arrayLogin = [];
+    arrayNodesLogin.forEach(element => {
+        arrayLogin.push(element.innerHTML)
+    });
+
+    const filteredLogin = arrayLogin.filter((item, index) => arrayLogin.indexOf(item) !== index);
+    
+    login.forEach(element => {
+        if (!filteredLogin.includes(element.innerHTML)) {
+            element.style.color = 'red'
+        }
+    });
+}
+
+(async () => {
+    await loadFollowers('followers', followers);
+    await loadFollowers('following', following);
+    
+    compareFollowersFollowing(); 
+})();

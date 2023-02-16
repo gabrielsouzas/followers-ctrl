@@ -2,9 +2,9 @@ const Octokit = require("@octokit/core").Octokit
 const fs = require('fs');
 
 const octokit = new Octokit();
-
+// aumentar paginas recebidas
 const fetchFollowers = async (value, user, filter = '') => {
-  const response = await octokit.request(`GET /users/{username}/${value}`, {
+  const response = await octokit.request(`GET /users/{username}/${value}?per_page=100`, {
     username: user
   })
 

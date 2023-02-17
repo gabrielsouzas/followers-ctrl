@@ -10,10 +10,12 @@
     document.querySelector('.container').innerHTML = htmlList;
 })();*/
 
-const arrayLogin = [];
+const userName = document.querySelector('.user-name');
 
 const followers = document.querySelector('#followers');
 const following = document.querySelector('#following');
+
+const arrayUsersRed = [];
 
 function addElement(tag, parent, innerHtml = '', src = '', className = '') {
     var element = document.createElement(tag);
@@ -57,8 +59,6 @@ const loadFollowers = async (value, element, filter = '') => {
     //element.innerHTML = html;
 }
 
-
-
 function compareFollowersFollowing(){
     const login = document.querySelectorAll('.login');
     const arrayNodesLogin = [...login];
@@ -74,13 +74,48 @@ function compareFollowersFollowing(){
     login.forEach(element => {
         if (!filteredLogin.includes(element.innerHTML)) {
             element.style.color = 'red'
+            arrayUsersRed.push(element.innerHTML)
         }
     });
 }
 
-(async () => {
-    await loadFollowers('followers', followers);
-    await loadFollowers('following', following);
+const loadProperties = async () => {
+    const prop = await fetch(`./github-api-fetch/properties.json`);
+    const propData = await prop.json();
+
+    userName.innerHTML+= propData.login;
+}
+
+const select = document.querySelector('select');
+
+function selectChangeState(){
+    if (select.value == 'not_following') {
+        const loginFollowers = document.querySelectorAll('#following .login');
+        loginFollowers.forEach(el => {
+            if (!arrayUsersRed.includes(el.innerHTML)) {
+                el.parentNode.remove();
+            }
+        });
+    } else {
+        clear();
+        load();
+    }
+}
+
+const clear = () => {
+    followers.innerHTML = ''
+    following.innerHTML = ''
+}
+
+const load = async () => {
+    (async () => {
+        await loadFollowers('followers', followers);
+        await loadFollowers('following', following);
+        
+        await loadProperties();
     
-    compareFollowersFollowing(); 
-})();
+        compareFollowersFollowing(); 
+    })();
+}
+
+load();

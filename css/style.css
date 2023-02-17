@@ -12,6 +12,25 @@ body {
     color: #FFF;
 }
 
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    margin: 20px 0;
+}
+
+select {
+    align-self: center;
+    font-size: 18pt;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    background-color: #161B22;
+    color: #FFF;
+}
+
 .container {
     display: flex;
     justify-content: center;

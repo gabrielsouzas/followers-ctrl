@@ -15,7 +15,16 @@
 
   </header>
   <main>
-    <h1>Usuário: </h1>
+    <h1 class="user-name">Usuário: </h1>
+    
+    <select onchange="selectChangeState()">
+      <option value="all">Select a filter</option>
+      <option value="not_following">Not following you</option>
+      <option>You not follow</option>
+      <option>Company</option>
+      <option>Possible robot follower</option>
+    </select>
+
     <div class="container">
       <div class="followers-list">
         <h1>List of Followers</h1>

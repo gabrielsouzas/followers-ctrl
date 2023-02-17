@@ -5,22 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="style.css">
-
-    <script defer src="script.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script defer src="js/script.js"></script>
 
     <title>Followers</title>
 </head>
 <body>
-  <div class="container">
-    <div>
-      <h1>List of Followers</h1>
-      <div class="list" id="followers"></div>
+  <header>
+
+  </header>
+  <main>
+    <h1>Usuário: </h1>
+    <div class="container">
+      <div class="followers-list">
+        <h1>List of Followers</h1>
+        <div class="legend">
+          <div class="legend-box"></div>
+          <span class="legend-text">Followers you don't follow</span>
+        </div>
+        <div id="followers"></div>
+      </div>
+      <div class="following-list" >
+        <h1>List of Following</h1>
+        <div class="legend">
+          <div class="legend-box"></div>
+          <span class="legend-text">Following who don't follow you</span>
+        </div>
+        <div id="following"></div>
+      </div>
     </div>
-    <div>
-      <h1>List of Following</h1>
-      <div class="list" id="following"></div>
-    </div>
-  </div>
+  </main>
 </body>
 </html>

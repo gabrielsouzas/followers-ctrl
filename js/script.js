@@ -32,7 +32,7 @@ function addElement(tag, parent, innerHtml = '', src = '', className = '') {
 }
 
 const loadFollowers = async (value, element, filter = '') => {
-    const response = await fetch(`./${value}.json`);
+    const response = await fetch(`./github-api-fetch/${value}.json`);
     const data = await response.json();
 
     // formatar os dados para enviar para o html

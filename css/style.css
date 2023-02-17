@@ -23,6 +23,21 @@ h1 {
     text-align: center;
 }
 
+.legend {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.legend-box {
+    width: 15px;
+    height: 15px;
+    background-color: red;
+}
+
 .user {
     background-color: #161B22;
     color: white;

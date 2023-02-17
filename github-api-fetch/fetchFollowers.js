@@ -1,5 +1,6 @@
 const Octokit = require("@octokit/core").Octokit
 const fs = require('fs');
+const properties = require('./properties.json');
 
 const octokit = new Octokit();
 // aumentar paginas recebidas
@@ -32,5 +33,5 @@ const fetchFollowers = async (value, user, filter = '') => {
   //return data;
 };
 
-fetchFollowers('followers', 'gabrielsouzas');
-fetchFollowers('following', 'gabrielsouzas');
+fetchFollowers('followers', properties.login);
+fetchFollowers('following', properties.login);

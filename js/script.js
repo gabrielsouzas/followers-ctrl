@@ -15,7 +15,7 @@ const userName = document.querySelector('.user-name');
 const followers = document.querySelector('#followers');
 const following = document.querySelector('#following');
 
-const arrayUsersRed = [];
+var arrayUsersRed = [];
 
 function addElement(tag, parent, innerHtml = '', src = '', className = '') {
     var element = document.createElement(tag);
@@ -59,7 +59,19 @@ const loadFollowers = async (value, element, filter = '') => {
     //element.innerHTML = html;
 }
 
+const fetchAttribute = async (fileName, filter) => {
+    const response = await fetch(`./github-api-fetch/${fileName}.json`);
+    const data = await response.json();
+
+    var arrayAttribute = [];
+    
+    data.map( dt => arrayAttribute.push(dt[`${filter}`])).join('');
+    
+    return arrayAttribute; 
+}
+
 function compareFollowersFollowing(){
+    arrayUsersRed = []
     const login = document.querySelectorAll('.login');
     const arrayNodesLogin = [...login];
     
@@ -89,13 +101,23 @@ const loadProperties = async () => {
 const select = document.querySelector('select');
 
 function selectChangeState(){
+    const loginFollowing = document.querySelectorAll('#following .login');
+    const loginFollowers = document.querySelectorAll('#followers .login');
     if (select.value == 'not_following') {
-        const loginFollowers = document.querySelectorAll('#following .login');
+        loginFollowing.forEach(el => {
+            if (!arrayUsersRed.includes(el.innerHTML)) {
+                el.parentNode.remove();
+            }
+        });
+    } else if (select.value == 'you_dont_follow') {
+        
         loginFollowers.forEach(el => {
             if (!arrayUsersRed.includes(el.innerHTML)) {
                 el.parentNode.remove();
             }
         });
+    } else if (select.value == 'organization') {
+        console.log(fetchAttribute('following', 'type'))
     } else {
         clear();
         load();

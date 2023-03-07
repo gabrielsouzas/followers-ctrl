@@ -16,6 +16,8 @@ const followers = document.querySelector('#followers');
 const following = document.querySelector('#following');
 
 var arrayUsersRed = [];
+var arrayOrganizationsFollowing = [];
+var arrayOrganizationsFollowers = [];
 
 function addElement(tag, parent, innerHtml = '', src = '', className = '') {
     var element = document.createElement(tag);
@@ -70,6 +72,17 @@ const fetchAttribute = async (fileName, filter) => {
     return arrayAttribute; 
 }
 
+const fetchJson = async (fileName) => {
+    const response = await fetch(`./github-api-fetch/${fileName}.json`);
+    const data = await response.json();
+
+    //var arrayAttribute = [];
+    
+    //data.map( dt => arrayAttribute.push(dt[`${filter}`])).join('');
+    
+    return data; 
+}
+
 function compareFollowersFollowing(){
     arrayUsersRed = []
     const login = document.querySelectorAll('.login');
@@ -117,11 +130,38 @@ function selectChangeState(){
             }
         });
     } else if (select.value == 'organization') {
-        console.log(fetchAttribute('following', 'type'))
+        loginFollowing.forEach(el => {
+            if (!arrayOrganizationsFollowing.includes(el.innerHTML)) {
+                el.parentNode.remove();
+            }
+        });
+
+        loginFollowers.forEach(el => {
+            if (!arrayOrganizationsFollowers.includes(el.innerHTML)) {
+                el.parentNode.remove();
+            }
+        });
     } else {
         clear();
         load();
     }
+}
+
+const loadOrganizations = async () => {
+    const dataFwi = await fetchJson('following');
+    const dataFwe = await fetchJson('followers');
+
+    dataFwi.forEach(element => {
+        if (element.type == 'Organization') {
+            arrayOrganizationsFollowing.push(element.login);
+        }
+    });
+
+    dataFwe.forEach(element => {
+        if (element.type == 'Organization') {
+            arrayOrganizationsFollowers.push(element.login);
+        }
+    });
 }
 
 const clear = () => {
@@ -133,6 +173,8 @@ const load = async () => {
     (async () => {
         await loadFollowers('followers', followers);
         await loadFollowers('following', following);
+
+        await loadOrganizations();
         
         await loadProperties();
     

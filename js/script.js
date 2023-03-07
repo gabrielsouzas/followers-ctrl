@@ -108,7 +108,7 @@ const loadProperties = async () => {
     const prop = await fetch(`./github-api-fetch/properties.json`);
     const propData = await prop.json();
 
-    userName.innerHTML+= propData.login;
+    userName.innerHTML = `User: ${propData.login}`;
 }
 
 const select = document.querySelector('select');
@@ -162,6 +162,7 @@ const loadOrganizations = async () => {
             arrayOrganizationsFollowers.push(element.login);
         }
     });
+
 }
 
 const clear = () => {

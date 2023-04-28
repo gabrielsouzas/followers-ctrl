@@ -38,8 +38,17 @@ select {
     padding: 30px;
 }
 
-h1 {
+h1, h3 {
     text-align: center;
+}
+
+main > h3 {
+    padding: 15px;
+    background-color: #161b22b6;
+}
+
+main > h1 {
+    color: #2763bde0;
 }
 
 .legend {

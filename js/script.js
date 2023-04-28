@@ -172,6 +172,7 @@ const clear = () => {
 
 const load = async () => {
     (async () => {
+
         await loadFollowers('followers', followers);
         await loadFollowers('following', following);
 
@@ -179,7 +180,7 @@ const load = async () => {
         
         await loadProperties();
     
-        compareFollowersFollowing(); 
+        compareFollowersFollowing();
     })();
 }
 

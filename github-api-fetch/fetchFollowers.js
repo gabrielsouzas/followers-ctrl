@@ -5,6 +5,7 @@ const properties = require('./properties.json');
 const octokit = new Octokit();
 // A FAZER: aumentar paginas recebidas
 const fetchFollowers = async (value, user, filter = '', per_page = '100') => {
+  /*const response = await octokit.request(`GET /users/{username}/${value}?per_page=100?page=1`, {*/
   const response = await octokit.request(`GET /users/{username}/${value}?per_page=${per_page}`, {
     username: user
   })
@@ -16,6 +17,31 @@ const fetchFollowers = async (value, user, filter = '', per_page = '100') => {
       filter: dt[`${filter}`]
     }))
   }
+  
+  /*
+    data = data.map( ({login}) => ({
+      login
+    }))
+  
+    data.forEach(element => {
+      console.log(element)
+    });*/
+
+  return data;
+};
+
+const fetchDetails = async (user) => {
+  const response = await octokit.request(`GET /users/${user}`, {
+    //username: user
+  })
+
+  var data = response.data;
+
+  /*if (filter != '') {
+    data = data.map( dt => ({
+      filter: dt[`${filter}`]
+    }))
+  }*/
   
   /*
     data = data.map( ({login}) => ({
@@ -51,6 +77,9 @@ async function verifyUsersFollowing(){
 
   writeJsonFile('followers', followers);
   writeJsonFile('following', following);
+
+  //fetchDetails();
+  //fetchFollowers('followers', properties.login);
 
   //verifyUsersFollowing();
 })();
